@@ -27,7 +27,8 @@ lane :release2 do
   update_app_id
   match(
     type: "adhoc",
-    git_url: "#{git_url}"
+    git_url: "#{git_url}",
+    readonly: true
   )
   gym(
     project: "#{app_name}.xcodeproj",
