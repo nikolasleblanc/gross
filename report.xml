@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: Switch to set_team lane" time="0.003547">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: automatic_code_signing" time="15.607763">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: update_project_team" time="0.005319">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: Switch to update_app_id lane" time="0.003111">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: update_app_identifier" time="0.010683">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: match" time="4.792336">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: gym" time="78.776453">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

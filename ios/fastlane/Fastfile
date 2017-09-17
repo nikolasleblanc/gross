@@ -1,0 +1,102 @@
+app_name = 'test6'
+app_identifier = "com.nikolasleblanc.#{app_name}"
+apple_id = "nikolas.leblanc@gmail.com"
+scheme = "#{app_name}"
+team_id = "943T62C9Y6"
+git_url = "git@github.com:nikolasleblanc/code-signing-management-attempt.git"
+profile = 'match Development com.nikolasleblanc.*'
+HOCKEY_APP_TOKEN = '04bb1ac4faae485f81bdd447c5d0b074'
+lane :echo do
+  sh "echo #{app_name}"
+  sh "echo #{app_identifier}"
+end
+
+lane :fight do
+  
+  hockey(
+    api_token: "#{HOCKEY_APP_TOKEN}",
+    ipa: "./test6.ipa",
+    notes: "Changelog"
+  )
+
+end
+
+desc "Deploy a new version to the App Store"
+lane :release2 do
+  set_team
+  update_app_id
+  match(
+    type: "adhoc",
+    git_url: "#{git_url}"
+  )
+  gym(
+    project: "#{app_name}.xcodeproj",
+    scheme: "#{app_name}",
+    xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{profile}' DEVELOPMENT_TEAM='#{team_id}'"
+  )
+end
+
+lane :update_app_id do
+update_app_identifier(
+  xcodeproj: "#{app_name}.xcodeproj",
+  plist_path: "#{app_name}/Info.plist",
+  app_identifier: "#{app_identifier}"
+)
+end
+
+lane :disable_automatic_codesigning do
+  update_project_codesigning(
+    path: "#{app_name}.xcodeproj",
+    use_automatic_signing: false
+  )
+end
+
+lane :set_team do
+  disable_automatic_code_signing 
+  update_project_team(
+     path: "#{app_name}.xcodeproj",
+     teamid: "#{team_id}"
+  )
+end 
+
+
+lane :beta do
+  gym(
+    scheme: "test1",
+    export_method: "ad-hoc",
+  )
+
+  mobile_center_upload(
+    api_token: "<Mobile Center API token>",
+    owner_name: "Bubbleman",
+    app_name: "Bubbles",
+    ipa: "./Bubbles.ipa",
+    group: "Bubblers",
+    release_notes: "Pops!"
+  )
+end
+
+lane :beta_test do
+  gym(
+    scheme: "test2",
+    export_method: "ad-hoc"
+  )
+end
+lane :build_development do
+    development_profiles
+    gym(
+      clean: true,
+      configuration: "Debug",
+      output_directory: "builds/" + Time.now.strftime('%F'),
+      output_name: "#{app_name}-development.ipa",
+      project: "#{app_name}.xcodeproj",
+      scheme: "#{app_name}"
+    )
+  end
+
+lane :development_profiles do
+    match(
+      type: 'development',
+      app_identifier: "#{app_identifier}"
+    )
+  end

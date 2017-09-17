@@ -1,0 +1,7 @@
+git_url "git@github.com:nikolasleblanc/code-signing-management-attempt.git"
+
+type "adhoc"
+app_identifier ["com.nikolasleblanc.*"]
+username "nikolas.leblanc@gmail.com"
+team_id "943T62C9Y6"
+
